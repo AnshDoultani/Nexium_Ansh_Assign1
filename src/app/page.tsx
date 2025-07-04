@@ -1,7 +1,16 @@
 'use client';
-
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
 import { useState } from 'react';
 import { quotes } from '@/data/quotes';
+
 
 export default function Home() {
   const [topic, setTopic] = useState('success');
@@ -18,38 +27,47 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Motivational Quote Generator</h1>
+      <h1 className="text-4xl font-bold mb-8 text-[#2D3745]">✨Motivational Quote Generator✨</h1>
       
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-        <select
-  value={topic}
-  onChange={(e) => setTopic(e.target.value)}
-  className="w-full border border-gray-700 rounded px-3 py-2 bg-gray-800 text-white"
-  required
->
-  <option value="success" className="bg-gray-800 text-white">Success</option>
-  <option value="life" className="bg-gray-800 text-white">Life</option>
-  <option value="motivation" className="bg-gray-800 text-white">Motivation</option>
-  <option value="courage" className="bg-gray-800 text-white">Courage</option>
-</select>
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+
+        <h3 className="text-lg font-semibold text-[#2D3745]">Select a Topic</h3>
+        <Select
+          value={topic}
+          onValueChange={(value) => setTopic(value)}
         >
-          Get Quotes
-        </button>
+          <SelectTrigger className="w-[450px]">
+            <SelectValue placeholder="Select a topic" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="success">Success</SelectItem>
+            <SelectItem value="life">Life</SelectItem>
+            <SelectItem value="motivation">Motivation</SelectItem>
+            <SelectItem value="courage">Courage</SelectItem>
+          </SelectContent>
+        </Select>
+
+
+        <div className="flex items-center justify-center">
+        <Button type="submit" variant="outline">Get Quotes</Button>
+        </div>
       </form>
+
+      
 
       {results && results.length > 0 && (
         <div className="mt-8 space-y-4 w-full max-w-md">
           {results.map((quote, idx) => (
-            <div key={idx} className="p-4 border rounded bg-gray-800 text-white font-medium">
-              {quote}
-            </div>
+            <Card key={idx} className="bg-neutral-200 text-black border border-neutral-700">
+              <CardContent>
+                {quote}
+              </CardContent>
+            </Card>
           ))}
         </div>
       )}
+
     </main>
   );
 }
